@@ -1,6 +1,7 @@
 package com.example.al_hussein.client;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.net.UnknownHostException;
 import CommonClass.User;
 import CommonCommand.Command;
 import CommonCommand.GetLOGIN;
+import CommonCommand.GetNewEvent;
 import CommonRespone.Respone;
 import CommonRespone.ResponeType;
 
@@ -29,7 +31,8 @@ public class MainClient extends Thread {
     public void run() {
         try {
             // host = InetAddress.getLocalHost();
-            socket = new Socket("192.168.1.101", PORT);
+
+            socket = new Socket("192.168.1.113", PORT);
             networkOutput = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             networkInput = new ObjectInputStream(socket.getInputStream());
             Log.i("CREATION", "Connected");
@@ -62,5 +65,25 @@ public class MainClient extends Thread {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public Respone RefreshEvent(User user) {
+
+        try {
+            Command command = new GetNewEvent();
+            networkOutput.writeObject(command);
+            networkOutput.flush();
+            final Respone respone = (Respone) networkInput.readObject();
+
+
+            if (respone.TypeRespone == ResponeType.DONE) {
+                return respone;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
