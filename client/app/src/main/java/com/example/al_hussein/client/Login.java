@@ -10,32 +10,32 @@ import android.widget.Toast;
 
 import CommonClass.User;
 
-public class Main2Activity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.login);
     }
 
     public void btnLogin(View view) {
-    /*    Intent Myintent = new Intent(this,MainActivity.class);
+    /*    Intent Myintent = new Intent(this,Welcom.class);
         startActivity(Myintent);*/
         EditText userName = findViewById(R.id.editText);
         EditText password = findViewById(R.id.editText2);
 
 
-        boolean ok = MainActivity.MyClient.Login(new User(userName.getText().toString(), password.getText().toString()));
+        boolean ok = Welcom.MyClient.Login(new User(userName.getText().toString(), password.getText().toString()));
 
         if (ok) {
             Log.i("CREATION", "Done Login");
             // go To Next GUI
-            Toast.makeText(Main2Activity.this, "Done Login", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this, "Done Login", Toast.LENGTH_SHORT).show();
 
-            Intent Myintent = new Intent(this, Main3Activity.class);
+            Intent Myintent = new Intent(this, MainPage.class);
             startActivity(Myintent);
         } else {
-            Toast.makeText(Main2Activity.this, "username or password is wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this, "username or password is wrong", Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -4,19 +4,16 @@ import android.content.Intent;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity {
+public class Welcom extends AppCompatActivity {
     static MainClient MyClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.welcom);
 
         /*because I can't use Network inside thread main*/
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -39,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnClick(View view) {
-        //Toast.makeText(MainActivity.this,"Hello Wolrd",Toast.LENGTH_SHORT).show();
-        Intent Myintent = new Intent(this,Main2Activity.class);
+        //Toast.makeText(Welcom.this,"Hello Wolrd",Toast.LENGTH_SHORT).show();
+        Intent Myintent = new Intent(this,Login.class);
         startActivity(Myintent);
     }
 
