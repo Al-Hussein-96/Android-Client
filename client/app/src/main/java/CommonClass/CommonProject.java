@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 public class CommonProject implements Serializable {
-
     public boolean Access = true;
     public int id;
     public String Author;
@@ -14,5 +13,5 @@ public class CommonProject implements Serializable {
     public Date DateCreate;
     public int numberOFBranshes;
     public List<Contributor> Contributors = new ArrayList<>();
-    public List< CommonBranch> BranchNames = new ArrayList<>();
+    public List< CommonBranch > BranchNames = new ArrayList<>();
 }

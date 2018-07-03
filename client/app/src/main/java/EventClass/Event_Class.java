@@ -1,11 +1,6 @@
 package EventClass;
-import CommonClass.User;
 import java.io.Serializable;
 import java.util.Date;
-/**
- * Created by Moaz on 6/25/2018.
- */
-
 public class Event_Class implements Serializable{
     public String Author ;
     public String ProjectName ;

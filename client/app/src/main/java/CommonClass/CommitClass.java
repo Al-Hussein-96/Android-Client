@@ -1,13 +1,7 @@
 package CommonClass;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-/**
- * Created by Moaz on 6/25/2018.
- */
 
 public class CommitClass implements Serializable {
 

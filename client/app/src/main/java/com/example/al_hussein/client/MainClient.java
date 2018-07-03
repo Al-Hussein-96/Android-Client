@@ -32,7 +32,7 @@ public class MainClient extends Thread {
         try {
             // host = InetAddress.getLocalHost();
 
-            socket = new Socket("192.168.1.6", PORT);
+            socket = new Socket("192.168.43.175", PORT);
             networkOutput = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             networkInput = new ObjectInputStream(socket.getInputStream());
             Log.i("CREATION", "Connected");
