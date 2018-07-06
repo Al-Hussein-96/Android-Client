@@ -9,7 +9,9 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 
+import CommonClass.CommonProject;
 import CommonClass.User;
 import CommonCommand.Command;
 import CommonCommand.GetLOGIN;
@@ -17,6 +19,7 @@ import CommonCommand.GetMyProject;
 import CommonCommand.GetNewEvent;
 import CommonRespone.Respone;
 import CommonRespone.ResponeType;
+import CommonRespone.SendMyProject;
 
 
 public class MainClient extends Thread {
@@ -32,7 +35,7 @@ public class MainClient extends Thread {
         try {
             // host = InetAddress.getLocalHost();
 
-            socket = new Socket("192.168.43.175", PORT);
+            socket = new Socket("192.168.1.6", PORT);
             networkOutput = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             networkInput = new ObjectInputStream(socket.getInputStream());
             Log.i("CREATION", "Connected");
@@ -87,7 +90,7 @@ public class MainClient extends Thread {
         return null;
     }
 
-    public Respone getMyProject(User user) {
+    public List<CommonProject> getMyProject(User user) {
         try {
             Command command = new GetMyProject();
             networkOutput.writeObject(command);
@@ -96,7 +99,7 @@ public class MainClient extends Thread {
 
 
             if (respone.TypeRespone == ResponeType.DONE) {
-                return respone;
+                return ((SendMyProject)respone).getMylist();
             }
         } catch (IOException e) {
             e.printStackTrace();

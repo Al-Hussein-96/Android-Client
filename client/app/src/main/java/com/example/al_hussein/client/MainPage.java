@@ -1,36 +1,50 @@
 package com.example.al_hussein.client;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import CommonClass.CommonProject;
 import CommonClass.User;
-import CommonRespone.Respone;
-import CommonRespone.ResponeType;
-import CommonRespone.SendMyProject;
-import CommonRespone.SendNewEvent;
-import EventClass.Event_AddBranch;
-import EventClass.Event_AddCommit;
-import EventClass.Event_AddContributor;
-import EventClass.Event_Class;
 
 public class MainPage extends AppCompatActivity {
-
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private ViewPagerAdapter adapter;
     User user ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pagemain);
+
+        fragmentMyProject myProject = new fragmentMyProject();
+
+       List<CommonProject> commonProjects = Welcom.MyClient.getMyProject(user);
+        myProject.setMyProjectlist(commonProjects);
+
+
+        tabLayout = (TabLayout) findViewById(R.id.tablayout_id);
+        viewPager = (ViewPager) findViewById(R.id.viewpager_id);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        adapter.AddFragment(new fragmentCall(),"Notifications");
+        adapter.AddFragment(myProject,"My Project");
+        adapter.AddFragment(new fragmentFav(),"All Project");
+
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+
+
     }
 
-    public void Refresh(View view) {
+
+
+/*    public void Refresh(View view) {
 
         Respone respone = Welcom.MyClient.RefreshEvent(user);
 
@@ -84,5 +98,5 @@ public class MainPage extends AppCompatActivity {
             Log.i("list","null");
 
 
-    }
+    }*/
 }
