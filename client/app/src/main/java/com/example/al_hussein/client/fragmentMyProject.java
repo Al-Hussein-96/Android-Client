@@ -10,12 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import CommonClass.CommonProject;
-
-
 
 
 public class fragmentMyProject extends Fragment {
@@ -23,6 +20,7 @@ public class fragmentMyProject extends Fragment {
     View v;
     private RecyclerView myrecyclerview;
     private List<CommonProject> listProject;
+
     public fragmentMyProject() {
         super();
     }
@@ -30,13 +28,16 @@ public class fragmentMyProject extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.myproject_fragment,container,false);
+        v = inflater.inflate(R.layout.myproject_fragment, container, false);
         myrecyclerview = (RecyclerView) v.findViewById(R.id.contact_recyclerview);
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getContext(),listProject);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getContext(), listProject);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myrecyclerview.setAdapter(recyclerViewAdapter);
+
+
         return v;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class fragmentMyProject extends Fragment {
     public void setMyProjectlist(List<CommonProject> commonProjects) {
         this.listProject = commonProjects;
     }
+
 }
 
 

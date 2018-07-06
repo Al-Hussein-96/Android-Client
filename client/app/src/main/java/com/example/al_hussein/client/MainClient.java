@@ -20,6 +20,8 @@ import CommonCommand.GetNewEvent;
 import CommonRespone.Respone;
 import CommonRespone.ResponeType;
 import CommonRespone.SendMyProject;
+import CommonRespone.SendNewEvent;
+import EventClass.Event_Class;
 
 
 public class MainClient extends Thread {
@@ -70,7 +72,7 @@ public class MainClient extends Thread {
         return false;
     }
 
-    public Respone RefreshEvent(User user) {
+    public List<Event_Class> RefreshEvent(User user) {
 
         try {
             Command command = new GetNewEvent();
@@ -80,7 +82,7 @@ public class MainClient extends Thread {
 
 
             if (respone.TypeRespone == ResponeType.DONE) {
-                return respone;
+                return ((SendNewEvent)respone).NewEvent;
             }
         } catch (IOException e) {
             e.printStackTrace();

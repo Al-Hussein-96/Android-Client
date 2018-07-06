@@ -15,6 +15,9 @@ import android.widget.Toast;
 import java.util.List;
 
 import CommonClass.CommonProject;
+import EventClass.Event_AddBranch;
+import EventClass.Event_AddCommit;
+import EventClass.Event_AddContributor;
 import EventClass.Event_Class;
 
 /**
@@ -43,7 +46,6 @@ public class RecyclerViewAdapterNotif extends RecyclerView.Adapter<RecyclerViewA
         vHolder.item_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("REFRESH", "Done Click");
                 myDialog.show();
                 Toast.makeText(mContext,"Mohammad: " + String.valueOf(vHolder.getAdapterPosition()),Toast.LENGTH_LONG);
             }
@@ -56,8 +58,16 @@ public class RecyclerViewAdapterNotif extends RecyclerView.Adapter<RecyclerViewA
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.tv_name.setText(aData.get(position).Author);
-        holder.tv_phone.setText(aData.get(position).ProjectName);
+        Event_Class event = aData.get(position);
+
+        String Type = "No Event";
+
+        if(event instanceof Event_AddCommit) Type = "Add Commit";
+        if(event instanceof Event_AddBranch) Type = "Add Branch";
+        if(event instanceof Event_AddContributor)  Type = "Add Contributor";
+
+        holder.tv_name_event.setText(Type);
+        holder.tv_owner_event.setText(event.ProjectName);
     }
 
 
@@ -70,15 +80,15 @@ public class RecyclerViewAdapterNotif extends RecyclerView.Adapter<RecyclerViewA
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         private LinearLayout item_notification;
-        private TextView tv_name;
-        private TextView tv_phone;
+        private TextView tv_name_event;
+        private TextView tv_owner_event;
         private ImageView img;
 
         public MyViewHolder(View itemView){
             super(itemView);
             item_notification = (LinearLayout) itemView.findViewById(R.id.notification_item);
-            tv_name = (TextView) itemView.findViewById(R.id.name_contact);
-            tv_phone = (TextView) itemView.findViewById(R.id.phone_contact);
+            tv_name_event = (TextView) itemView.findViewById(R.id.name_contact);
+            tv_owner_event = (TextView) itemView.findViewById(R.id.phone_contact);
             img = (ImageView) itemView.findViewById(R.id.img_contact);
         }
     }

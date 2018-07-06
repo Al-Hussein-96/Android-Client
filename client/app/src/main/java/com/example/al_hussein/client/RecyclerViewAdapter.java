@@ -32,6 +32,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         android.view.View v;
         v = LayoutInflater.from(mContext).inflate(R.layout.item_project,parent,false);
         final MyViewHolder vHolder = new MyViewHolder(v);
+        Log.i("REFRESH", "Done Click");
 
         return vHolder;
 

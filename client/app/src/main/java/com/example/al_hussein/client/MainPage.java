@@ -28,8 +28,10 @@ public class MainPage extends AppCompatActivity {
         /// my project
         fragmentMyProject myProject = new fragmentMyProject();
 
-        // List<CommonProject> commonProjects = Welcom.MyClient.getMyProject(user);
-        List<CommonProject> commonProjects = new ArrayList<>();
+
+
+         List<CommonProject> commonProjects = Welcom.MyClient.getMyProject(user);
+      /*  List<CommonProject> commonProjects = new ArrayList<>();
         CommonProject x = new CommonProject();
         x.Author = "Mohammad";
         x.NameProject = "Java";
@@ -38,15 +40,14 @@ public class MainPage extends AppCompatActivity {
         y.Author = "Ahmad";
         y.NameProject = "C++";
         commonProjects.add(x);
-        commonProjects.add(y);
+        commonProjects.add(y);*/
         myProject.setMyProjectlist(commonProjects);
 
         /// Notifications
         fragmentNotifications notifications = new fragmentNotifications();
-        List<Event_Class> event_classes = new ArrayList<>();
-        Event_Class w = new Event_AddCommit("Mohammad","Java",new Date(),null);
+        List<Event_Class> event_classes = Welcom.MyClient.RefreshEvent(user);
+      //  List<Event_Class> event_classes = new ArrayList<>();
 
-        event_classes.add(w);
 
         notifications.setNotifications(event_classes);
 
