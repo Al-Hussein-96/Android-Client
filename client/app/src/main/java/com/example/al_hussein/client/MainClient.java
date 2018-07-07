@@ -30,19 +30,17 @@ public class MainClient extends Thread {
     public static Socket socket;
     public static ObjectInputStream networkInput;
     public static ObjectOutputStream networkOutput;
-
+    public static String IP_Server = "192.168.1.111";
 
     @Override
     public void run() {
         try {
-            // host = InetAddress.getLocalHost();
-
-            socket = new Socket("192.168.1.6", PORT);
+            socket = new Socket(IP_Server, PORT);
             networkOutput = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             networkInput = new ObjectInputStream(socket.getInputStream());
             Log.i("CREATION", "Connected");
         } catch (UnknownHostException ex) {
-            System.out.println("\nHost ID not foun!");
+            System.out.println("\nHost ID not found!");
             System.exit(1);
         } catch (IOException e) {
 
@@ -50,6 +48,10 @@ public class MainClient extends Thread {
             System.exit(1);
         }
 
+    }
+
+    public void setIP_Server(String IP_Server){
+        this.IP_Server = IP_Server;
     }
 
     public boolean Login(User user) {
