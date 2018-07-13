@@ -2,8 +2,12 @@ package com.example.al_hussein.client;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,12 +22,49 @@ public class MainPage extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
-    User user;
+    public static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pagemain);
+
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                List<Event_Class> event_classes = Welcom.MyClient.RefreshEvent(user);
+
+                Fragment frg = null;
+                frg = adapter.getFragment(0);
+                final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.detach(frg);
+                ((fragmentNotifications)frg).setNotifications(event_classes);
+                ft.attach(frg);
+             //   ft.commit();
+
+
+                List<CommonProject> commonProjects = Welcom.MyClient.getMyProject(user);
+                frg = adapter.getFragment(1);
+
+                ft.detach(frg);
+                ((fragmentMyProject)frg).setMyProjectlist(commonProjects);
+                ft.attach(frg);
+                ft.commit();
+
+           /*     frg = adapter.getFragment(2);
+                final FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+
+                ft2.detach(frg);
+                ((fragmentFav)frg).setNotifications(event_classes);
+                ft2.attach(frg);
+                ft2.commit();*/
+
+                swipeRefreshLayout.setRefreshing(false);
+                Log.i("Refresh","Mohammad");
+            }
+        });
 
         /// my project
         fragmentMyProject myProject = new fragmentMyProject();
@@ -45,8 +86,10 @@ public class MainPage extends AppCompatActivity {
 
         /// Notifications
         fragmentNotifications notifications = new fragmentNotifications();
-        List<Event_Class> event_classes = Welcom.MyClient.RefreshEvent(user);
-      //  List<Event_Class> event_classes = new ArrayList<>();
+       // List<Event_Class> event_classes = Welcom.MyClient.RefreshEvent(user);
+        List<Event_Class> event_classes = new ArrayList<>();
+
+
 
 
         notifications.setNotifications(event_classes);

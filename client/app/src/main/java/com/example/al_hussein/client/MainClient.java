@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 import CommonClass.CommonProject;
@@ -91,7 +92,7 @@ public class MainClient extends Thread {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public List<CommonProject> getMyProject(User user) {

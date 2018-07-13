@@ -56,6 +56,7 @@ public class RecyclerViewAdapterNotif extends RecyclerView.Adapter<RecyclerViewA
 
 
 
+
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Event_Class event = aData.get(position);

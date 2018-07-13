@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.al_hussein.client.MainPage"
-    android:orientation="vertical">
+    tools:context=".MainPage">
 
-    <android.support.design.widget.TabLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:tabMode="fixed"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@color/colorAccent"
-        android:id="@+id/tablayout_id">
-    </android.support.design.widget.TabLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.al_hussein.client.MainPage">
 
-    <android.support.v4.view.ViewPager
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-        android:id="@+id/viewpager_id"></android.support.v4.view.ViewPager>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabMode="fixed"></android.support.design.widget.TabLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_id"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v4.view.ViewPager>
 
 
-</LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
