@@ -54,9 +54,6 @@ public class RecyclerViewAdapterNotif extends RecyclerView.Adapter<RecyclerViewA
 
     }
 
-
-
-
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Event_Class event = aData.get(position);
@@ -70,8 +67,6 @@ public class RecyclerViewAdapterNotif extends RecyclerView.Adapter<RecyclerViewA
         holder.tv_name_event.setText(Type);
         holder.tv_owner_event.setText(event.ProjectName);
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -93,38 +88,5 @@ public class RecyclerViewAdapterNotif extends RecyclerView.Adapter<RecyclerViewA
             img = (ImageView) itemView.findViewById(R.id.img_contact);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -25,11 +25,6 @@ public class Welcom extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
-
-
-
-
     }
 
     @Override
@@ -53,6 +48,7 @@ public class Welcom extends AppCompatActivity {
         Intent Myintent = new Intent(this,Login.class);
         startActivity(Myintent);
     }
+
     public  boolean isValidIP(String ipAddr){
 
         Pattern ptn = Pattern.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$");

@@ -31,9 +31,10 @@ public class Login extends AppCompatActivity {
             Log.i("CREATION", "Done Login");
             // go To Next GUI
             Toast.makeText(Login.this, "Done Login", Toast.LENGTH_SHORT).show();
-
             Intent Myintent = new Intent(this, MainPage.class);
             startActivity(Myintent);
+            MainPage.user = new User(userName.getText().toString(), password.getText().toString());
+
         } else {
             Toast.makeText(Login.this, "username or password is wrong", Toast.LENGTH_SHORT).show();
         }

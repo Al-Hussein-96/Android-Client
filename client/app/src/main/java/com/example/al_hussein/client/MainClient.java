@@ -15,11 +15,14 @@ import java.util.List;
 import CommonClass.CommonProject;
 import CommonClass.User;
 import CommonCommand.Command;
+import CommonCommand.FollowProject;
 import CommonCommand.GetLOGIN;
+import CommonCommand.GetMyFollowProject;
 import CommonCommand.GetMyProject;
 import CommonCommand.GetNewEvent;
 import CommonRespone.Respone;
 import CommonRespone.ResponeType;
+import CommonRespone.SendMyFollowProjects;
 import CommonRespone.SendMyProject;
 import CommonRespone.SendNewEvent;
 import EventClass.Event_Class;
@@ -32,7 +35,6 @@ public class MainClient extends Thread {
     public static ObjectInputStream networkInput;
     public static ObjectOutputStream networkOutput;
     public static String IP_Server = "192.168.1.111";
-
     @Override
     public void run() {
         try {
@@ -113,4 +115,43 @@ public class MainClient extends Thread {
         }
         return null;
     }
+
+    public boolean sentFollow(String project,boolean FollowUp){
+        try {
+            Command command = new FollowProject(project,FollowUp);
+            networkOutput.writeObject(command);
+            networkOutput.flush();
+            final Respone respone = (Respone) networkInput.readObject();
+
+
+            if (respone.TypeRespone == ResponeType.DONE) {
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public List<String> getMyFollowProjects(){
+        try {
+            Command command = new GetMyFollowProject();
+            networkOutput.writeObject(command);
+            networkOutput.flush();
+            final Respone respone = (Respone) networkInput.readObject();
+
+
+            if (respone.TypeRespone == ResponeType.DONE) {
+                return ((SendMyFollowProjects)respone).getMyFollowProjects();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

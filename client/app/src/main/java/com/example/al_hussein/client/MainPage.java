@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import CommonClass.CommonProject;
 import CommonClass.User;
+import CommonCommand.Command;
 import EventClass.Event_AddCommit;
 import EventClass.Event_Class;
 
@@ -24,34 +26,31 @@ public class MainPage extends AppCompatActivity {
     private ViewPagerAdapter adapter;
     public static User user;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.pagemain);
-
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                List<Event_Class> event_classes = Welcom.MyClient.RefreshEvent(user);
-
-                Fragment frg = null;
-                frg = adapter.getFragment(0);
-                final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.detach(frg);
-                ((fragmentNotifications)frg).setNotifications(event_classes);
-                ft.attach(frg);
-             //   ft.commit();
+    public void Refresh(){
+        List<String> MyFollowProjects = Welcom.MyClient.getMyFollowProjects();
+        for(String projectName:MyFollowProjects){
+            MainPage.user.add_Follow(projectName);
+        }
 
 
-                List<CommonProject> commonProjects = Welcom.MyClient.getMyProject(user);
-                frg = adapter.getFragment(1);
+        List<Event_Class> event_classes = Welcom.MyClient.RefreshEvent(user);
 
-                ft.detach(frg);
-                ((fragmentMyProject)frg).setMyProjectlist(commonProjects);
-                ft.attach(frg);
-                ft.commit();
+        Fragment frg = null;
+        frg = adapter.getFragment(0);
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ((fragmentNotifications)frg).setNotifications(event_classes);
+        ft.attach(frg);
+        //   ft.commit();
+
+
+        List<CommonProject> commonProjects = Welcom.MyClient.getMyProject(user);
+        frg = adapter.getFragment(1);
+
+        ft.detach(frg);
+        ((fragmentMyProject)frg).setMyProjectlist(commonProjects);
+        ft.attach(frg);
+        ft.commit();
 
            /*     frg = adapter.getFragment(2);
                 final FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
@@ -61,10 +60,29 @@ public class MainPage extends AppCompatActivity {
                 ft2.attach(frg);
                 ft2.commit();*/
 
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.pagemain);
+
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Refresh();
                 swipeRefreshLayout.setRefreshing(false);
                 Log.i("Refresh","Mohammad");
             }
         });
+
+
+        List<String> MyFollowProjects = Welcom.MyClient.getMyFollowProjects();
+        if(MyFollowProjects!=null)
+        for(String projectName:MyFollowProjects){
+            MainPage.user.add_Follow(projectName);
+        }
+        else Toast.makeText(MainPage.this, "Doooooo", Toast.LENGTH_SHORT).show();
 
         /// my project
         fragmentMyProject myProject = new fragmentMyProject();
