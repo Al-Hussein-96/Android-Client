@@ -16,12 +16,14 @@ import CommonClass.CommonProject;
 import CommonClass.User;
 import CommonCommand.Command;
 import CommonCommand.FollowProject;
+import CommonCommand.GetAllProject;
 import CommonCommand.GetLOGIN;
 import CommonCommand.GetMyFollowProject;
 import CommonCommand.GetMyProject;
 import CommonCommand.GetNewEvent;
 import CommonRespone.Respone;
 import CommonRespone.ResponeType;
+import CommonRespone.SendAllProject;
 import CommonRespone.SendMyFollowProjects;
 import CommonRespone.SendMyProject;
 import CommonRespone.SendNewEvent;
@@ -107,6 +109,23 @@ public class MainClient extends Thread {
 
             if (respone.TypeRespone == ResponeType.DONE) {
                 return ((SendMyProject)respone).getMylist();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<CommonProject> getAllProject() {
+        try {
+            Command command = new GetAllProject();
+            networkOutput.writeObject(command);
+            networkOutput.flush();
+            final Respone respone = (Respone) networkInput.readObject();
+            if (respone.TypeRespone == ResponeType.DONE) {
+                return ((SendAllProject)respone).getMylist();
             }
         } catch (IOException e) {
             e.printStackTrace();

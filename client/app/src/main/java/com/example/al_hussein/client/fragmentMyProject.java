@@ -41,14 +41,7 @@ public class fragmentMyProject extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
-     /*   listProject = new ArrayList<>();
-        CommonProject x = new CommonProject();
-        x.Author = "Mohammad";
-        x.NameProject = "Java";
-        listProject.add(x);*/
     }
 
     public void setMyProjectlist(List<CommonProject> commonProjects) {

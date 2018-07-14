@@ -1,6 +1,7 @@
 package com.example.al_hussein.client;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,9 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import CommonClass.CommonProject;
 import CommonClass.User;
@@ -32,39 +36,47 @@ public class MainPage extends AppCompatActivity {
             MainPage.user.add_Follow(projectName);
         }
 
-
         List<Event_Class> event_classes = Welcom.MyClient.RefreshEvent(user);
-
         Fragment frg = null;
         frg = adapter.getFragment(0);
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.detach(frg);
         ((fragmentNotifications)frg).setNotifications(event_classes);
         ft.attach(frg);
-        //   ft.commit();
 
 
         List<CommonProject> commonProjects = Welcom.MyClient.getMyProject(user);
         frg = adapter.getFragment(1);
-
         ft.detach(frg);
         ((fragmentMyProject)frg).setMyProjectlist(commonProjects);
         ft.attach(frg);
+ //       ft.commit();
+
+        List<CommonProject> commonProjectsAll = Welcom.MyClient.getAllProject();
+        frg = adapter.getFragment(2);
+        ft.detach(frg);
+        ((fragmentMyProject)frg).setMyProjectlist(commonProjectsAll);
+        ft.attach(frg);
         ft.commit();
 
-           /*     frg = adapter.getFragment(2);
-                final FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-
-                ft2.detach(frg);
-                ((fragmentFav)frg).setNotifications(event_classes);
-                ft2.attach(frg);
-                ft2.commit();*/
-
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pagemain);
+
+        // her Timer to refresh the data every 5 sec
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //do Refresh
+                Refresh();
+   //             Toast.makeText(MainPage.this, "looool", Toast.LENGTH_SHORT).show();
+                handler.postDelayed( this, 5000 );
+            }
+        }, 5000);
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -84,33 +96,20 @@ public class MainPage extends AppCompatActivity {
         }
         else Toast.makeText(MainPage.this, "Doooooo", Toast.LENGTH_SHORT).show();
 
-        /// my project
-        fragmentMyProject myProject = new fragmentMyProject();
-
-
-
-         List<CommonProject> commonProjects = Welcom.MyClient.getMyProject(user);
-      /*  List<CommonProject> commonProjects = new ArrayList<>();
-        CommonProject x = new CommonProject();
-        x.Author = "Mohammad";
-        x.NameProject = "Java";
-
-        CommonProject y = new CommonProject();
-        y.Author = "Ahmad";
-        y.NameProject = "C++";
-        commonProjects.add(x);
-        commonProjects.add(y);*/
-        myProject.setMyProjectlist(commonProjects);
-
         /// Notifications
         fragmentNotifications notifications = new fragmentNotifications();
-       // List<Event_Class> event_classes = Welcom.MyClient.RefreshEvent(user);
-        List<Event_Class> event_classes = new ArrayList<>();
-
-
-
-
+        List<Event_Class> event_classes = Welcom.MyClient.RefreshEvent(user);
         notifications.setNotifications(event_classes);
+
+        /// my project
+        fragmentMyProject myProject = new fragmentMyProject();
+        List<CommonProject> commonProjects = Welcom.MyClient.getMyProject(user);
+        myProject.setMyProjectlist(commonProjects);
+
+        /// all project
+        fragmentMyProject allProject = new fragmentMyProject();
+        List<CommonProject> commonProjectsAll = Welcom.MyClient.getAllProject();
+        allProject.setMyProjectlist(commonProjectsAll);
 
         tabLayout = (TabLayout) findViewById(R.id.tablayout_id);
         viewPager = (ViewPager) findViewById(R.id.viewpager_id);
@@ -118,11 +117,10 @@ public class MainPage extends AppCompatActivity {
 
         adapter.AddFragment(notifications, "Notifications");
         adapter.AddFragment(myProject, "My Project");
-        adapter.AddFragment(new fragmentFav(), "All Project");
+        adapter.AddFragment(allProject, "All Project");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-
 
     }
 

@@ -76,8 +76,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
-
-
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
@@ -107,8 +105,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
     }
-
-
 
     @Override
     public int getItemCount() {

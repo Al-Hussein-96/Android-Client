@@ -11,6 +11,8 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import CommonClass.User;
+
 
 public class Welcom extends AppCompatActivity {
     static MainClient MyClient;
@@ -50,11 +52,35 @@ public class Welcom extends AppCompatActivity {
     }
 
     public  boolean isValidIP(String ipAddr){
-
         Pattern ptn = Pattern.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$");
         Matcher mtch = ptn.matcher(ipAddr);
         return mtch.find();
     }
+
+    // check if UserName Valid :
+    // Have at least 3 character
+    // First one is char
+
+    public boolean isValidUserName(String UserName){
+        Pattern ptn = Pattern.compile("^[a-zA-Z][a-zA-Z0-9\\-._]{2,}$");
+        Matcher match = ptn.matcher(UserName);
+        return match.find();
+    }
+
+
+    //    (?=.*[0-9]) a digit must occur at least once
+    //    (?=.*[a-z]) a lower case letter must occur at least once
+    //    (?=.*[A-Z]) an upper case letter must occur at least once
+    //    (?=.*[@#$%^&+=]) a special character must occur at least once
+    //    (?=\\S+$) no whitespace allowed in the entire string
+    //    .{8,} at least 8 characters
+
+    public boolean isValidPassword(String Password){
+        Pattern ptn = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
+        Matcher match = ptn.matcher(Password);
+        return match.find();
+    }
+
 
 }
 
