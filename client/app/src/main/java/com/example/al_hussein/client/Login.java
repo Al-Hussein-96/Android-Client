@@ -27,14 +27,14 @@ public class Login extends AppCompatActivity {
         EditText userName = findViewById(R.id.editText);
         EditText password = findViewById(R.id.editText2);
 
-        if(!isValidUserName(userName.getText().toString())){
+    /*    if(!isValidUserName(userName.getText().toString())){
             Toast.makeText(Login.this, "invalid username", Toast.LENGTH_SHORT).show();
             return;
         }
         if(!isValidPassword(password.getText().toString())){
             Toast.makeText(Login.this, "invalid password", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
         boolean ok = Welcom.MyClient.Login(new User(userName.getText().toString(), password.getText().toString()));
 

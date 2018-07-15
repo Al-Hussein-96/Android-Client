@@ -1,5 +1,6 @@
 package com.example.al_hussein.client;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.BufferedOutputStream;
@@ -30,14 +31,14 @@ import CommonRespone.SendNewEvent;
 import EventClass.Event_Class;
 
 
-public class MainClient extends Thread {
+public class MainClient extends AsyncTask<Void,Void,Void> {
     public static final int PORT = 4321;
     public static InetAddress host;
     public static Socket socket;
     public static ObjectInputStream networkInput;
     public static ObjectOutputStream networkOutput;
     public static String IP_Server = "192.168.1.111";
-    @Override
+  /*  @Override
     public void run() {
         try {
             socket = new Socket(IP_Server, PORT);
@@ -53,7 +54,7 @@ public class MainClient extends Thread {
             System.exit(1);
         }
 
-    }
+    }*/
 
     public void setIP_Server(String IP_Server){
         this.IP_Server = IP_Server;
@@ -173,4 +174,27 @@ public class MainClient extends Thread {
         return null;
     }
 
+    @Override
+    protected Void doInBackground(Void... voids) {
+        try {
+            socket = new Socket(IP_Server, PORT);
+            networkOutput = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            networkInput = new ObjectInputStream(socket.getInputStream());
+            Log.i("CREATION", "Connected");
+        } catch (UnknownHostException ex) {
+            System.out.println("\nHost ID not found!");
+            System.exit(1);
+        } catch (IOException e) {
+
+            Log.i("CREATION", e.getMessage());
+            System.exit(1);
+        }finally{
+            try {
+                socket.close();
+            } catch (IOException ex) {
+                //handle exception
+            }
+        }
+        return null;
+    }
 }
