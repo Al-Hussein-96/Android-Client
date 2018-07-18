@@ -38,7 +38,7 @@ public class MainClient extends AsyncTask<Void,Void,Void> {
     public static ObjectInputStream networkInput;
     public static ObjectOutputStream networkOutput;
     public static String IP_Server = "192.168.1.111";
-  /*  @Override
+/*    @Override
     public void run() {
         try {
             socket = new Socket(IP_Server, PORT);
@@ -174,6 +174,7 @@ public class MainClient extends AsyncTask<Void,Void,Void> {
         return null;
     }
 
+
     @Override
     protected Void doInBackground(Void... voids) {
         try {
@@ -188,12 +189,6 @@ public class MainClient extends AsyncTask<Void,Void,Void> {
 
             Log.i("CREATION", e.getMessage());
             System.exit(1);
-        }finally{
-            try {
-                socket.close();
-            } catch (IOException ex) {
-                //handle exception
-            }
         }
         return null;
     }

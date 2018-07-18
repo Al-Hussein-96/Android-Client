@@ -27,7 +27,27 @@ public class MainPage extends AppCompatActivity {
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
     public static User user;
+    private List<Event_Class> MyList;
 
+    private boolean haveEvent(Event_Class e){
+        for(Event_Class temp : MyList){
+            if (temp instanceof Event_AddContributor) {
+                if(!(e instanceof Event_AddContributor)){
+                    continue;
+                }
+            } else if (temp instanceof Event_AddBranch) {
+                if(!(e instanceof Event_AddBranch)){
+                    continue;
+                }
+            } else if (temp instanceof Event_AddCommit) {
+                if(!(e instanceof Event_AddCommit)){
+                    continue;
+                }
+            }
+            if(e.Author.equals(temp.Author) && e.ProjectName.equals(temp.ProjectName) && e.date.equals(temp.date))return true;
+        }
+        return false;
+    }
     public void Refresh() {
         List<String> MyFollowProjects = Welcom.MyClient.getMyFollowProjects();
         for (String projectName : MyFollowProjects) {
@@ -39,6 +59,7 @@ public class MainPage extends AppCompatActivity {
         // here for notification
         int id = 0;
         for (Event_Class u : event_classes) {
+            if(haveEvent(u))continue;
             String Type = "";
 
             if (u instanceof Event_AddContributor) {
@@ -91,6 +112,8 @@ public class MainPage extends AppCompatActivity {
 
         ft.commit();
 
+        MyList = event_classes;
+
     }
 
     @Override
@@ -132,6 +155,7 @@ public class MainPage extends AppCompatActivity {
         fragmentNotifications notifications = new fragmentNotifications();
         List<Event_Class> event_classes = Welcom.MyClient.RefreshEvent(user);
         notifications.setNotifications(event_classes);
+        MyList = event_classes;
 
         /// my project
         fragmentMyProject myProject = new fragmentMyProject();
