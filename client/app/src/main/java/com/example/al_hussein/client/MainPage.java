@@ -28,26 +28,30 @@ public class MainPage extends AppCompatActivity {
     private ViewPagerAdapter adapter;
     public static User user;
     private List<Event_Class> MyList;
+    private boolean isRun = false;
 
-    private boolean haveEvent(Event_Class e){
-        for(Event_Class temp : MyList){
+    private boolean haveEvent(Event_Class e) {
+        for (Event_Class temp : MyList) {
             if (temp instanceof Event_AddContributor) {
-                if(!(e instanceof Event_AddContributor)){
+                if (!(e instanceof Event_AddContributor)) {
                     continue;
                 }
             } else if (temp instanceof Event_AddBranch) {
-                if(!(e instanceof Event_AddBranch)){
+                if (!(e instanceof Event_AddBranch)) {
                     continue;
                 }
             } else if (temp instanceof Event_AddCommit) {
-                if(!(e instanceof Event_AddCommit)){
+                if (!(e instanceof Event_AddCommit)) {
                     continue;
                 }
             }
-            if(e.Author.equals(temp.Author) && e.ProjectName.equals(temp.ProjectName) && e.date.equals(temp.date))return true;
+            if (e.Author.equals(temp.Author) && e.ProjectName.equals(temp.ProjectName) && e.date.equals(temp.date))
+                return true;
         }
         return false;
     }
+
+
     public void Refresh() {
         List<String> MyFollowProjects = Welcom.MyClient.getMyFollowProjects();
         for (String projectName : MyFollowProjects) {
@@ -59,7 +63,7 @@ public class MainPage extends AppCompatActivity {
         // here for notification
         int id = 0;
         for (Event_Class u : event_classes) {
-            if(haveEvent(u))continue;
+            if (haveEvent(u)) continue;
             String Type = "";
 
             if (u instanceof Event_AddContributor) {
@@ -110,7 +114,7 @@ public class MainPage extends AppCompatActivity {
             ft.attach(frg);
         }
 
-        ft.commit();
+        if (isRun) ft.commit();
 
         MyList = event_classes;
 
@@ -180,61 +184,21 @@ public class MainPage extends AppCompatActivity {
 
     }
 
-
-
-/*    public void Refresh(View view) {
-
-        Respone respone = Welcom.MyClient.RefreshEvent(user);
-
-        if(respone ==null)return;
-
-        if (respone.TypeRespone==ResponeType.DONE) {
-            Log.i("REFRESH", "Done Refresh");
-            Toast.makeText(MainPage.this, "Done Refresh", Toast.LENGTH_SHORT).show();
-            LinearLayout L = findViewById(R.id.linearLayout);
-
-            List<Event_Class> NewEvent = ((SendNewEvent)respone).NewEvent;
-
-            TextView tv=new TextView(getApplicationContext());
-            tv.setText("new new");
-
-            L.addView(tv);
-            Toast.makeText(MainPage.this, "new", Toast.LENGTH_SHORT).show();
-
-            for(Event_Class e:NewEvent){
-                if(e instanceof Event_AddContributor){
-                    tv=new TextView(getApplicationContext());
-                    tv.setText("new addCon");
-                }
-                else if(e instanceof Event_AddBranch){
-                    tv=new TextView(getApplicationContext());
-                    tv.setText("new addbra");
-                }
-                else if(e instanceof Event_AddCommit){
-                    tv=new TextView(getApplicationContext());
-                    tv.setText("new addCommit");
-                }
-                L.addView(tv);
-            }
-
-        } else {
-            Toast.makeText(MainPage.this, "You Not Connect", Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isRun = false;
     }
 
-    public void btnMyproject(View view) {
-        Respone respone = Welcom.MyClient.getMyProject(user);
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isRun=false;
+    }
 
-        if(respone != null)
-        {
-            Log.i("list",String.valueOf(((SendMyProject)respone).getMylist().size()));
-            Intent Myintent = new Intent(this,MyProject.class);
-            Myintent.putExtra("respone",respone);
-            startActivity(Myintent);
-        }
-        else
-            Log.i("list","null");
-
-
-    }*/
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isRun = true;
+    }
 }
