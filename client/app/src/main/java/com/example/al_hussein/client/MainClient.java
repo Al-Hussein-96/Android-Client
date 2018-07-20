@@ -188,12 +188,6 @@ public class MainClient extends AsyncTask<Void,Void,Void> {
 
             Log.i("CREATION", e.getMessage());
             System.exit(1);
-        }finally{
-            try {
-                socket.close();
-            } catch (IOException ex) {
-                //handle exception
-            }
         }
         return null;
     }
