@@ -55,15 +55,31 @@ public class RecyclerViewAdapterNotif extends RecyclerView.Adapter<RecyclerViewA
             public void onClick(View v) {
                 SimpleDateFormat ft = new SimpleDateFormat("yyyy.MM.dd 'at' hh:mm:ss");
 
-                TextView Aut = (TextView) myDialog.findViewById(R.id.Author);
-                TextView ProjectName = (TextView) myDialog.findViewById(R.id.ProjectName);
+                TextView ProjectName = (TextView) myDialog.findViewById(R.id.projectName);
                 TextView date = (TextView) myDialog.findViewById(R.id.date);
                 TextView Type = (TextView) myDialog.findViewById(R.id.Type);
+                TextView textDetails = (TextView) myDialog.findViewById(R.id.textDetails);
+                TextView Details = (TextView) myDialog.findViewById(R.id.details);
 
-                Aut.setText(vHolder.Author);
+                Event_Class event = vHolder.MyEvent;
+                if (event instanceof Event_AddCommit){
+                    textDetails.setText("Details :");
+                    Event_AddCommit e = (Event_AddCommit)event ;
+                    Details.setText(e.NewCommit.Detail);
+                }
+                if (event instanceof Event_AddBranch){
+                    textDetails.setText("Branch Name :");
+                    Event_AddBranch e = (Event_AddBranch)event ;
+                    Details.setText(e.NameBranch);
+                }
+                if (event instanceof Event_AddContributor){
+                    textDetails.setText("Contributor Name :");
+                    Event_AddContributor e = (Event_AddContributor)event ;
+                    Details.setText(e.NameContributor);
+                }
                 ProjectName.setText(vHolder.ProjectName.getText());
                 date.setText(ft.format(vHolder.date));
-                Type.setText(vHolder.Type.getText());
+                Type.setText(vHolder.Author +" " + vHolder.Type.getText());
                 myDialog.show();
                 Toast.makeText(mContext, "Mohammad: " + String.valueOf(vHolder.getAdapterPosition()), Toast.LENGTH_LONG);
             }
@@ -86,6 +102,7 @@ public class RecyclerViewAdapterNotif extends RecyclerView.Adapter<RecyclerViewA
         holder.ProjectName.setText(event.ProjectName);
         holder.Author = event.Author;
         holder.date = event.date;
+        holder.MyEvent = event;
     }
 
     @Override
@@ -101,6 +118,7 @@ public class RecyclerViewAdapterNotif extends RecyclerView.Adapter<RecyclerViewA
         private String Author;
         private Date date;
         private ImageView img;
+        private Event_Class MyEvent;
 
         public MyViewHolder(View itemView) {
             super(itemView);
