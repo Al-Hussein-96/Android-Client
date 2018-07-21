@@ -38,7 +38,7 @@ public class MainClient extends AsyncTask<Void,Void,Void> {
     public static ObjectInputStream networkInput;
     public static ObjectOutputStream networkOutput;
     public static String IP_Server = "192.168.1.111";
-  /*  @Override
+/*    @Override
     public void run() {
         try {
             socket = new Socket(IP_Server, PORT);
@@ -173,6 +173,7 @@ public class MainClient extends AsyncTask<Void,Void,Void> {
         }
         return null;
     }
+
 
     @Override
     protected Void doInBackground(Void... voids) {

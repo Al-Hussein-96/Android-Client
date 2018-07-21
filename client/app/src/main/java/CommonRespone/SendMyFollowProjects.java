@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package CommonRespone;
 
 import java.io.Serializable;
@@ -5,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Moaz on 7/13/2018.
+ *
+ * @author Moaz
  */
-
 public class SendMyFollowProjects extends Respone implements Serializable {
 
     List<String> MyFollowProjects = new ArrayList<>();

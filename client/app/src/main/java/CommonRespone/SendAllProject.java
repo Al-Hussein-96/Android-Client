@@ -5,9 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Moaz on 7/14/2018.
- */
 public class SendAllProject extends Respone implements Serializable {
 
     List<CommonProject> mylist = new ArrayList<>();

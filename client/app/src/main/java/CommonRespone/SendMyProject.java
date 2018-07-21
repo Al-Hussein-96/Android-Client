@@ -1,10 +1,9 @@
 package CommonRespone;
 
+import CommonClass.CommonProject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import CommonClass.CommonProject;
 
 public class SendMyProject extends Respone implements Serializable{
 
@@ -20,6 +19,6 @@ public class SendMyProject extends Respone implements Serializable{
     public List<CommonProject> getMylist() {
         return mylist;
     }
-
-
+    
+    
 }

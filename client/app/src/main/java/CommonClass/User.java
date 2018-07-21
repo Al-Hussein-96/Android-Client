@@ -13,10 +13,10 @@ public class User implements Serializable {
     String Email;
     Date DateCreate;
     private int LastEventSee = 0;
-    private List< String> MyFollow = new ArrayList<>();
+    private List<String> MyFollow = new ArrayList<>();
 
     public void Update_Last_Event_See(int x) {
-//        LastEventSee = x;
+        //LastEventSee = x;
     }
 
     public int get_Last_Event_See() {
@@ -36,7 +36,7 @@ public class User implements Serializable {
     }
 
     public void delete_Follow(String ProjectName) {
-        List< String> temp = new ArrayList<>();
+        List<String> temp = new ArrayList<>();
         for (String s : MyFollow) {
             if (!s.equals(ProjectName)) {
                 temp.add(s);
@@ -45,7 +45,7 @@ public class User implements Serializable {
         MyFollow = temp;
     }
 
-    public List< String> getMyFollow() {
+    public List<String> getMyFollow() {
         return MyFollow;
     }
 

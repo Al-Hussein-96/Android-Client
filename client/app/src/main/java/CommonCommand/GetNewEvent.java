@@ -5,6 +5,7 @@
  */
 package CommonCommand;
 
+import CommonClass.User;
 import java.io.Serializable;
 
 /**
